@@ -11,13 +11,12 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                LinearGradient(colors: [.blue, .black], startPoint: .top, endPoint: .center)
-                    .ignoresSafeArea()
                 VStack{
                     ScrollView{
                         Image("kendrick")
                             .resizable()
-                            .scaledToFit().aspectRatio(contentMode: .fit)
+                            .scaledToFit()
+                            .aspectRatio(contentMode: .fit)
                             .frame(width: 200, height: 250,alignment: .center)
                             .aspectRatio(1.0, contentMode: .fit)
                             .clipped()
@@ -30,9 +29,19 @@ struct ContentView: View {
                             .padding(.trailing, 200.0)
                             .fixedSize()
                         
-                        //                        HStack{
-                        //
-                        //                        }
+                        HStack{
+                            AsyncImage(url: URL(string: "https://avatars.githubusercontent.com/u/79866605?v=4")){ image in image
+                                    .resizable()
+                                    .scaledToFit()
+                            } placeholder: {
+                                Color.gray
+                            }
+                            .frame(width: 20).padding(.leading)
+                            
+                            Text("Igor Augusto")
+                                .foregroundColor(.white)
+                            Spacer()
+                        }
                         
                         ForEach(songs) { item in
                             NavigationLink( destination: DetalheView(currentSong: item)){
@@ -65,34 +74,48 @@ struct ContentView: View {
                             }
                         }
                         
-                        NavigationStack{
+                        VStack{
+                            HStack{
+                                Text("Sugeridos")
+                                    .font(.system(size: 28, weight: .bold))
+                                    .foregroundColor(.white)
+                                Spacer()
+                            }
+                            
                             ScrollView(.horizontal){
                                 HStack{
-                                    ForEach(songs) { item in
-                                        NavigationLink( destination: DetalheView(currentSong: item)){
-                                            
-                                            AsyncImage(url: URL(string: item.cover)!) { image in
+                                    ForEach(suggestions) { suggestion in
+                                        
+                                        VStack{
+                                            AsyncImage(url:
+                                                        URL(string: suggestion.albumCover)){ image in
                                                 image
                                                     .resizable()
-                                                    .aspectRatio(1.0, contentMode: .fit)
-                                                    .frame(width: 80, height: 80, alignment: .trailing)
-                                                    .clipped()
-                                                    .aspectRatio(contentMode: .fill)
-                                            }placeholder: {
-                                                Image(systemName: "photo.fill")
-                                            }.padding(.trailing, 0.0).frame(width: 70 ,alignment: .trailing)
+                                                    .scaledToFill()
+                                                
+                                            } placeholder: {
+                                                Color.gray
+                                            }
+                                            .frame(width: 200)
+                                            .padding()
+                                            
+                                            Text(suggestion.albumName)
+                                                .foregroundColor(.white)
                                         }
                                     }
                                 }
+                                
                             }
+                            
                         }
                     }
-                    .padding()
                 }
-            }
+                .padding()
+            }.background(LinearGradient(gradient: Gradient(colors: [.gray, .black]), startPoint: .top, endPoint: .center))
         }
     }
 }
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
