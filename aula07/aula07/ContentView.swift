@@ -7,71 +7,6 @@
 
 import SwiftUI
 
-struct DetalheView: View {
-    var currentSong: Song
-    var body: some View {
-        ZStack{
-            LinearGradient(colors: [.blue, .black], startPoint: .top, endPoint: .center)
-                .ignoresSafeArea()
-            VStack{
-                ScrollView{
-                    AsyncImage(url: URL(string: currentSong.cover)!) { image in
-                        image
-                            .resizable()
-                            .aspectRatio(1.0, contentMode: .fit)
-                            .frame(width: 300, height: 300, alignment: .center)
-                            .clipped()
-                            .aspectRatio(contentMode: .fit)
-                    }placeholder: {
-                        Image(systemName: "photo.fill")
-                    }.padding(.bottom, 80.0).frame(width: 70, alignment: .center)
-                    VStack{
-                        Text(currentSong.name)
-                            .font(.system(size: 28))
-                            .multilineTextAlignment(.leading)
-                            .colorInvert()
-                            .frame(alignment: .leading)
-                            .padding(.trailing, 200)
-                            .fixedSize()
-                        
-                        Text(currentSong.artist)
-                            .font(.system(size: 18))
-                            .multilineTextAlignment(.leading)
-                            .colorInvert()
-                            .frame(alignment: .trailing)
-                            .padding(.trailing, 200.0)
-                            .padding(.bottom, 10.0)
-                            .fixedSize()
-                    }
-                    
-                    HStack{
-                        Image(systemName: "shuffle")
-                            .padding(.trailing)
-                            .font(.system(size: 30.0))
-                            .foregroundColor(.white)
-                        Image(systemName: "backward.end.fill")
-                            .padding(.horizontal)
-                            .font(.system(size: 30.0))
-                            .foregroundColor(.white)
-                        Image(systemName: "play.fill")
-                            .padding(.horizontal)
-                            .font(.system(size: 58.0))
-                            .foregroundColor(.white)
-                        Image(systemName: "forward.end.fill")
-                            .padding(.horizontal)
-                            .font(.system(size: 30.0))
-                            .foregroundColor(.white)
-                        Image(systemName: "repeat")
-                            .font(.system(size: 30.0))
-                            .foregroundColor(.white)
-                    }
-                    
-                }
-            }
-        }
-    }
-}
-
 struct ContentView: View {
     var body: some View {
         NavigationStack {
@@ -83,7 +18,7 @@ struct ContentView: View {
                         Image("kendrick")
                             .resizable()
                             .scaledToFit().aspectRatio(contentMode: .fit)
-                            .frame(width: 200, alignment: .center)
+                            .frame(width: 200, height: 250,alignment: .center)
                             .aspectRatio(1.0, contentMode: .fit)
                             .clipped()
                         
@@ -95,9 +30,9 @@ struct ContentView: View {
                             .padding(.trailing, 200.0)
                             .fixedSize()
                         
-//                        HStack{
-//
-//                        }
+                        //                        HStack{
+                        //
+                        //                        }
                         
                         ForEach(songs) { item in
                             NavigationLink( destination: DetalheView(currentSong: item)){
@@ -115,14 +50,12 @@ struct ContentView: View {
                                     }.padding(.trailing, 0.0).frame(width: 70 ,alignment: .trailing)
                                         .clipped()
                                     
-                                    VStack{
+                                    VStack (alignment: .leading){
                                         Text(item.name)
                                             .accentColor(.white)
-                                        //.padding(/*@START_MENU_TOKEN@*/.trailing, 200.0/*@END_MENU_TOKEN@*/)
                                         
                                         Text(item.artist)
-                                            .accentColor(.white)
-                                        //.padding(/*@START_MENU_TOKEN@*/.trailing, 200.0/*@END_MENU_TOKEN@*/)
+                                            .accentColor(.gray)
                                             .font(.system(size: 14))
                                         
                                     }
@@ -159,11 +92,10 @@ struct ContentView: View {
             }
         }
     }
-        
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
     }
-    
-    struct ContentView_Previews: PreviewProvider {
-        static var previews: some View {
-            ContentView()
-        }
-    }
+}
