@@ -4,30 +4,16 @@
 //
 //  Created by Student14 on 01/08/23.
 //
-import Foundation
+
 import SwiftUI
 
 struct ContentView: View {
-    // @State private var searchText = ""
+    @State private var isSheetPresented = false
     var body: some View {
         NavigationStack {
-            ZStack { // VSTACK
-                LinearGradient(gradient: Gradient(colors: [.gray, .black]), startPoint: .top, endPoint: .center)
-                    .ignoresSafeArea()
-
-                //     AsyncImage(url:
-                //             URL(string: "https://i.pinimg.com/1200x/95/c9/45/95c945d8ddc1b3ecc0d367470e24aa8b.jpg")){ image in
-                //     image
-                //         .resizable()
-                //         .scaledToFit()
-                    
-                // } placeholder: {
-                //     Color.gray
-                // }
-                // .frame(width: 200)
-                // .padding()
-                VStack{
-                    ScrollView{
+            ZStack {
+                VStack {
+                    ScrollView {
                         Image("kendrick")
                             .resizable()
                             .scaledToFit()
@@ -43,17 +29,7 @@ struct ContentView: View {
                             .frame(alignment: .trailing)
                             .padding(.trailing, 200.0)
                             .fixedSize()
-
-                        // Playlist/Album Title
-                        // HStack {
-                        // Text("HackTruck FM")
-                        //     .font(.system(size: 32, weight: .semibold))
-                        //     .foregroundColor(.white)
-                        //     .padding(.leading)
-                        // Spacer()
-                        // }
                         
-                        // Author
                         HStack{
                             AsyncImage(url: URL(string: "https://avatars.githubusercontent.com/u/79866605?v=4")){ image in image
                                     .resizable()
@@ -68,15 +44,12 @@ struct ContentView: View {
                             Spacer()
                         }
                         
-                        // ScrollView{
-                        // VStack{
-                        ForEach(searchResults) { item in
+                        ForEach(songs) { item in
                             NavigationLink( destination: DetalheView(currentSong: item)){
                                 HStack{
                                     AsyncImage(url: URL(string: item.cover)!) { image in
                                         image
                                             .resizable()
-                                            // .scaledToFit()
                                             .aspectRatio(1.0, contentMode: .fit)
                                             .frame(width: 60, height: 60, alignment: .trailing)
                                             .clipped()
@@ -84,7 +57,6 @@ struct ContentView: View {
                                         
                                     }placeholder: {
                                         Image(systemName: "photo.fill")
-                                        // Color.gray
                                     }.padding(.trailing, 0.0).frame(width: 70 ,alignment: .trailing)
                                         .clipped()
                                     
@@ -95,29 +67,16 @@ struct ContentView: View {
                                         Text(item.artist)
                                             .accentColor(.gray)
                                             .font(.system(size: 14))
+                                        
                                     }
-
-                                    // VStack(){
-                                    //         HStack{
-                                    //             Text(item.name)
-                                    //             Spacer()
-                                    //         }
-                                    //         HStack{
-                                    //             Text(item.artist)
-                                    //             Spacer()
-                                    //         }
-                                    // }
-                                    // .foregroundColor(.white)
-
                                     Spacer()
-                                    Image(systemName: "ellipsis")
-                                        .foregroundColor(.white)
-                                        // .padding()
+                                    Image(systemName: "ellipsis").foregroundColor(.white).onTapGesture {
+                                        isSheetPresented = true
+                                    }
                                 }
                             }
                         }
                         
-                        // Sugestions
                         VStack{
                             HStack{
                                 Text("Sugeridos")
@@ -154,19 +113,38 @@ struct ContentView: View {
                         }
                     }
                 }
-                //.padding()
-            }// .background(LinearGradient(gradient: Gradient(colors: [.gray, .black]), startPoint: .top, endPoint: .center))
+                .padding()
+            }.background(LinearGradient(gradient: Gradient(colors: [.gray, .black]), startPoint: .top, endPoint: .center))
         }
-        .searchable(text: $searchText, prompt: "Busque sua música")
-        .foregroundColor(.white)
-        .accentColor(.white)
-    }
-
-    var searchResults: [Song] {
-        if searchText.isEmpty {
-            return songs
-        } else {
-            return songs.filter { $0.name.contains(searchText) }
+        .sheet(isPresented: $isSheetPresented) {
+            // Custom sheet content
+            VStack(spacing: 20) {
+                Button(action: {}) {
+                    HStack {
+                        Image(systemName: "heart.fill")
+                            .foregroundColor(.green)
+                        Text("Favoritos")
+                    }
+                }
+                Button(action: {}) {
+                    HStack {
+                        Image(systemName: "plus.circle.fill")
+                            .foregroundColor(.green)
+                        Text("Adicionar a playlist")
+                    }
+                }
+                Button(action: {}) {
+                    HStack {
+                        Image(systemName: "arrow.down.circle.fill")
+                            .foregroundColor(.green)
+                        Text("Download")
+                    }
+                }
+            }
+            .padding()
+            .background(Color.gray.opacity(0.8))
+            .cornerRadius(20)
+            .foregroundColor(.white)
         }
     }
 }
