@@ -6,12 +6,15 @@
 //
 
 import Foundation
+//https://akabab.github.io/starwars-api/api/all.json
+//https://hp-api.onrender.com/api/characters/house/gryffindor
 
 class ViewModel : ObservableObject {
-    @Published var person : [StarWarsCharacter] = []
+//    @Published var person : [StarWarsCharacter] = []
+    @Published var person : [HaPo] = []
     
     func fetch(){
-        guard let url = URL(string: "https://akabab.github.io/starwars-api/api/all.json" )
+        guard let url = URL(string: "https://hp-api.onrender.com/api/characters/house/gryffindor" )
         else {
             return
         }
@@ -22,7 +25,7 @@ class ViewModel : ObservableObject {
             }
             
             do {
-                let parsed = try JSONDecoder().decode([StarWarsCharacter].self, from: data)
+                let parsed = try JSONDecoder().decode([HaPo].self, from: data)
                 
                 DispatchQueue.main.async {
                     self?.person = parsed

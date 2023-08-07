@@ -13,7 +13,7 @@ struct ContentView: View {
         NavigationStack{
             VStack {
                 // Background Image
-                AsyncImage(url: URL(string: "https://www.mordeo.org/files/uploads/2021/01/Star-Wars-Logo-4K-Ultra-HD-Mobile-Wallpaper-scaled.jpg"), content: {
+                AsyncImage(url: URL(string: "https://wallpaperaccess.com/full/496873.jpg"), content: {
                     image in image
                         .resizable()
                         .aspectRatio(contentMode: .fill)
@@ -21,7 +21,7 @@ struct ContentView: View {
                     ProgressView()
                 })
                 .ignoresSafeArea()
-                .frame(width: 250, height: 250)
+                .frame(width: 399, height: 250)
                 
                 ScrollView {
                     ForEach(viewModel.person){
@@ -46,8 +46,10 @@ struct ContentView: View {
             }
             .foregroundColor(.white)
             .ignoresSafeArea()
-            .background(Color(""))
+            .background(Color("bg_scroll"))
+            
         }
+        .accentColor(.yellow)
         .onAppear() {
             viewModel.fetch()
         }

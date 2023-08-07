@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct CharView: View {
-    var swchar: StarWarsCharacter
+    //var swchar: StarWarsCharacter
+    var swchar: HaPo
     var body: some View {
         ZStack {
             // Background Image
             // Asyncimage(url: URL(string: , placeholder: ), content: )
-            AsyncImage(url: URL(string: "https://www.mordeo.org/files/uploads/2021/01/Star-Wars-Logo-4K-Ultra-HD-Mobile-Wallpaper-scaled.jpg"),
+            AsyncImage(url: URL(string: "https://wallpaperaccess.com/full/496873.jpg"),
                        content: { image in
                 image.resizable()
             },
@@ -36,23 +37,27 @@ struct CharView: View {
                     .background(Color.gray)
                     .clipShape(Circle())
                     .padding(10)
-                // Spe
-                Text(swchar.species!)
+                // Species
+                Text(swchar.house!)
                     .foregroundColor(.white)
                     .bold()
+                // Name
                 Text(swchar.name!)
                     .foregroundColor(.white)
                     .bold()
-                Text(swchar.homeworld!)
+                // Homeworld
+                Text(swchar.dateOfBirth!)
                     .foregroundColor(.white)
                     .bold()
-                Text(swchar.eyeColor!)
+                // Eye color
+                Text(swchar.eyeColour!)
                     .foregroundColor(.white)
                     .bold()
+                // Gender
                 Text(swchar.gender!)
                     .foregroundColor(.white)
                     .bold()
-            }
-        }
+            }.accentColor(.white)
+        }.accentColor(.white)
     }
 }
