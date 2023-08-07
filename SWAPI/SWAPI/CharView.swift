@@ -57,7 +57,7 @@ struct CharView: View {
                 Text(swchar.gender!)
                     .foregroundColor(.white)
                     .bold()
-            }.accentColor(.white)
-        }.accentColor(.white)
+            }
+        }
     }
 }

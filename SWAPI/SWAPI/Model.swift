@@ -61,15 +61,13 @@ import Foundation
 //}
 
 // https://hp-api.onrender.com/api/characters/house/gryffindor
-struct Wand : Codable {
+struct Wand : Decodable {
     let wood : String?
     let core : String?
     let length : Double?
 }
 
-
-
-struct HaPo: Codable, Identifiable {
+struct HaPo: Decodable, Identifiable {
     let id : String
     let name :  String?
     let alternate_names : [String]?

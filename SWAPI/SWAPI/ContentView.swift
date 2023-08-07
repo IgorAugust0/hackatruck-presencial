@@ -48,8 +48,7 @@ struct ContentView: View {
             .ignoresSafeArea()
             .background(Color("bg_scroll"))
             
-        }
-        .accentColor(.yellow)
+        }.accentColor(.yellow)
         .onAppear() {
             viewModel.fetch()
         }
