@@ -116,6 +116,7 @@ struct ContentView: View {
                 .padding()
             }.background(LinearGradient(gradient: Gradient(colors: [.gray, .black]), startPoint: .top, endPoint: .center))
         }
+        .tint(.white)
         .sheet(isPresented: $isSheetPresented) {
             // Custom sheet content
             VStack(spacing: 20) {
