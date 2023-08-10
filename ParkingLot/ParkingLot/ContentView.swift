@@ -24,20 +24,23 @@ struct ContentView: View {
                 .frame(width: 399, height: 250)
                 
                 ScrollView {
-                    ForEach(viewModel.parlot, id: \.self){
-                        p in NavigationLink(destination: CarView(pklot: p)) {
-                            HStack {
-                                AsyncImage(url: URL(string: p.image!), content: {
-                                    image in image
-                                        .resizable()
-                                        .scaledToFill()
-                                }, placeholder: {
-                                    ProgressView()
-                                }).frame(width: 90, height: 90)
-                                    .background(Color.gray)
-                                    .clipShape(Circle())
-                                    .padding(10)
-                                Text(p.parkingLotName)
+                    ForEach(viewModel.parlot, id: \.self) { parkingLot in
+                        NavigationLink(destination: CarView(cars: parkingLot)) {
+                            VStack {
+                                ForEach(parkingLot.car, id: \.self) { car in
+                                    AsyncImage(url: URL(string: car.image ?? ""), content: {
+                                        image in image
+                                            .resizable()
+                                            .scaledToFill()
+                                    }, placeholder: {
+                                        ProgressView()
+                                    }).frame(width: 90, height: 90)
+                                        .background(Color.gray)
+                                        .clipShape(Circle())
+                                        .padding(10)
+                                    Text(car.model)
+                                    
+                                }
                                 Spacer()
                             }
                         }

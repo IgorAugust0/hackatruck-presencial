@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CarView: View {
-    var pklot: ParkingLot
+    var cars: ParkingLot
     var body: some View {
         ZStack {
             // Background Image
@@ -24,7 +24,7 @@ struct CarView: View {
                 .blur(radius: 10)
             VStack {
                 // Image of the car
-                AsyncImage(url: URL(string: pklot.car.image!),
+                AsyncImage(url: URL(string: cars.car[0].image ?? ""),
                            content: { image in
                     image
                         .resizable()
@@ -36,27 +36,29 @@ struct CarView: View {
                     .background(Color.gray)
                     .clipShape(Circle())
                     .padding(10)
-                // Species
-                Text(pklot.car.model)
+                // model of the car
+                Text(cars.car[0].model)
                     .foregroundColor(.white)
                     .bold()
                 // Year of the car
-                Text("\(pklot.car.year)")
+                Text("\(cars.car[0].year)")
                     .foregroundColor(.white)
                     .bold()
-                // Homeworld
-                Text(pklot.car.color)
+                // color of the car
+                Text(cars.car[0].color)
                     .foregroundColor(.white)
                     .bold()
-                // Eye color
-                Text("\(pklot.car.price)")
+                // price of it
+                Text("\(cars.car[0].price)")
                     .foregroundColor(.white)
                     .bold()
                 // Gender
-                Text("Parked in \(pklot.parkingLotName) at the lot \(pklot.lot)")
+                Text("Parked in \(cars.parkingLotName) at the lot \(cars.lot)")
                     .foregroundColor(.white)
                     .bold()
             }
         }
     }
 }
+
+
