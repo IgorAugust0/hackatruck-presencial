@@ -6,32 +6,44 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct ContentView: View {
     @State private var isSheetPresented = false
+    @State private var searchText = ""
     var body: some View {
         NavigationStack {
             ZStack {
+                LinearGradient(gradient: Gradient(colors: [.gray, .black]), startPoint: .top, endPoint: .center)
+                    .ignoresSafeArea()
+                
                 VStack {
                     ScrollView {
-                        Image("kendrick")
-                            .resizable()
-                            .scaledToFit()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 200, height: 250,alignment: .center)
-                            .aspectRatio(1.0, contentMode: .fit)
-                            .clipped()
+                        AsyncImage(url:
+                                    URL(string: "https://i.discogs.com/HrgjHLlvo4e-l4Y3h40evhtvn_NXu3iuVZuq1E86mB0/rs:fit/g:sm/q:90/h:500/w:500/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTE3Nzg5/NzctMTQ3MDY4MDM5/Ny0xOTk0LmpwZWc.jpeg")){ image in
+                            image
+                                .resizable()
+                                .scaledToFit()
+                            
+                        } placeholder: {
+                            Color.gray
+                        }
+                        .frame(width: 200)
+                        .padding()
                         
-                        Text("HackaFM")
-                            .font(.system(size: 36))
-                            .multilineTextAlignment(.leading)
-                            .colorInvert()
-                            .frame(alignment: .trailing)
-                            .padding(.trailing, 200.0)
-                            .fixedSize()
                         
-                        HStack{
-                            AsyncImage(url: URL(string: "https://avatars.githubusercontent.com/u/79866605?v=4")){ image in image
+                        HStack {
+                            Text("This is K.dot ")
+                                .font(.system(size: 32, weight: .semibold))
+                                .foregroundColor(.white)
+                                .padding(.leading)
+                            Spacer()
+                            
+                        }
+                        
+                        HStack {
+                            AsyncImage(url: URL(string: "https://avatars.githubusercontent.com/u/79866605?v=4")){
+                                image in image
                                     .resizable()
                                     .scaledToFit()
                             } placeholder: {
@@ -44,7 +56,7 @@ struct ContentView: View {
                             Spacer()
                         }
                         
-                        ForEach(songs) { item in
+                        ForEach(searchResults) { item in
                             NavigationLink( destination: DetalheView(currentSong: item)){
                                 HStack{
                                     AsyncImage(url: URL(string: item.cover)!) { image in
@@ -114,9 +126,10 @@ struct ContentView: View {
                     }
                 }
                 .padding()
-            }.background(LinearGradient(gradient: Gradient(colors: [.gray, .black]), startPoint: .top, endPoint: .center))
+            }
         }
         .tint(.white)
+        .searchable(text: $searchText, prompt: "Busque sua música")
         .sheet(isPresented: $isSheetPresented) {
             // Custom sheet content
             VStack(spacing: 20) {
@@ -146,6 +159,14 @@ struct ContentView: View {
             .background(Color.gray.opacity(0.8))
             .cornerRadius(20)
             .foregroundColor(.white)
+        }
+    }
+    
+    var searchResults: [Song] {
+        if searchText.isEmpty {
+            return songs
+        } else {
+            return songs.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
         }
     }
 }
